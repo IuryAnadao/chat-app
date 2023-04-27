@@ -27,5 +27,4 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT [ "entrypoint.sh" ]
 
-CMD [ "bash" ]
-# CMD [ "./bin/dev" ]
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
