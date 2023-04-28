@@ -10,7 +10,9 @@ class RoomsController < ApplicationController
   end
 
   def create
+    binding.break
     @room = Room.new(room_params)
+    @room.save
   end
 
   def edit
