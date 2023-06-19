@@ -20,11 +20,10 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
 RUN bash /tmp/nodesource_setup.sh
 RUN apt install nodejs
 RUN npm install --global yarn
-# RUN npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 RUN rails assets:precompile
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT [ "entrypoint.sh" ]
 
-CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+CMD [ "./bin/dev" ]

@@ -10,9 +10,15 @@ class RoomsController < ApplicationController
   end
 
   def create
-    binding.break
     @room = Room.new(room_params)
-    @room.save
+
+    respond_to do |format|
+      if @room.save
+        format.turbo_stream { render turbo_stream: turbo_stream.prepend(:rooms, partial: 'shared/room', locals: { room: @room }) }
+      else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(:room_form, partial: 'rooms/form', locals: { room: @room }) }
+      end
+    end
   end
 
   def edit
