@@ -16,7 +16,7 @@ class RoomsController < ApplicationController
       if @room.save
         format.turbo_stream { render turbo_stream: turbo_stream.prepend(:rooms, partial: 'shared/room', locals: { room: @room }) }
       else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(:room_form, partial: 'rooms/form', locals: { room: @room }) }
+        format.html { render :new }
       end
     end
   end
@@ -28,7 +28,14 @@ class RoomsController < ApplicationController
   end
 
   def update
-    @room.update(room_params)
+    respond_to do |format|
+      if @room.update(room_params)
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("room_#{@room.id}", partial: 'shared/room', locals: { room: @room }) }
+      else
+        format.html { render :edit }
+        # format.turbo_stream { render turbo_stream: turbo_stream.replace("room_#{@room.id}", partial: 'rooms/form', locals: { room: @room }) }
+      end
+    end
   end
 
   def destroy
