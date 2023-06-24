@@ -1,4 +1,8 @@
-<div>
-  <h1 class="font-bold text-4xl">Rooms#show</h1>
-  <p>Find me in app/views/rooms/show.html.erb</p>
-</div>
+<%= turbo_frame_tag 'rooms_controller' do %>
+  <main class="flex w-full h-screen bg-sky-200">
+    <%= render 'shared/sidebar' %>
+    <section class="w-5/6 flex flex-col gap-5 h-screen px-5" >
+      <%= render 'room', room: @room %>
+    </section>
+  </main>
+<% end %>

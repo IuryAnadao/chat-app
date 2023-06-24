@@ -25,6 +25,10 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @room
+    # respond_to do |format|
+    #   format.html { render :show, locals: { room: @room } }
+    # end
   end
 
   def update
