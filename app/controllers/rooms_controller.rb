@@ -14,6 +14,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       if @room.save
+        UserRoom.create(user: current_user, room: @room)
         format.turbo_stream { render turbo_stream: turbo_stream.prepend(:rooms, partial: 'shared/room', locals: { room: @room }) }
       else
         format.html { render :new }
@@ -44,6 +45,15 @@ class RoomsController < ApplicationController
 
   def destroy
     @room.destroy
+  end
+
+  def add_user
+    room_id = params[:room_id]
+    UserRoom.create(user_id: params[:user_id], room_id: room_id)
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("room_show_#{room_id}", partial: 'rooms/room', locals: { room: Room.find(room_id) }) }
+    end
   end
 
   private

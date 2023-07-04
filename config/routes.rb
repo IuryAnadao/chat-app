@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post 'add/user', to: 'rooms#add_user'
   # get 'rooms/index'
   # get 'rooms/new'
   # get 'rooms/edit'
