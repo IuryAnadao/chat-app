@@ -15,7 +15,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if @room.save
         UserRoom.create(user: current_user, room: @room)
-        format.turbo_stream { render turbo_stream: turbo_stream.prepend(:rooms, partial: 'shared/room', locals: { room: @room }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.prepend("user_#{current_user.id}_rooms", partial: 'shared/room', locals: { room: @room }) }
       else
         format.html { render :new }
       end
@@ -27,9 +27,6 @@ class RoomsController < ApplicationController
 
   def show
     @room
-    # respond_to do |format|
-    #   format.html { render :show, locals: { room: @room } }
-    # end
   end
 
   def update
